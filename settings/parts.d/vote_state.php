@@ -4,7 +4,7 @@ return [
     'comment' => [
         'as_date' => 1489132800,    // strtotime('2017-03-10')
         'oa_required_level' => 1,
-        'na_required_level' => 6,     // Allow all allowed users to listen New Age
+        'na_required_level' => 6,   // Allow all allowed users to listen New Age
         'na_required_rating' => 10.0,
         'hide_voters_from_owner' => true,
         'date_sort' => SORT_ASC,
@@ -12,7 +12,7 @@ return [
     'topic' => [
         'as_date' => 1489132800,    // strtotime('2017-03-10')
         'oa_required_level' => 1,
-        'na_required_level' => 6,     // Allow all allowed users to listen New Age
+        'na_required_level' => 6,   // Allow all allowed users to listen New Age
         'na_required_rating' => false,
         'hide_voters_from_owner' => false,
         'date_sort' => SORT_ASC,
@@ -20,7 +20,7 @@ return [
     'blog' => [
         'as_date' => 0,
         'oa_required_level' => 6,
-        'na_required_level' => 6,     // Allow all allowed users to listen New Age
+        'na_required_level' => 6,   // Allow all allowed users to listen New Age
         'na_required_rating' => false,
         'hide_voters_from_owner' => false,
         'date_sort' => SORT_DESC,
@@ -28,7 +28,7 @@ return [
     'user' => [
         'as_date' => 1357027200,    // strtotime('2013-01-01')
         'oa_required_level' => 1,
-        'na_required_level' => 6,     // Allow all users to listen New Age
+        'na_required_level' => 6,   // Allow all users to listen New Age
         'na_required_rating' => 10.0,
         'hide_voters_from_owner' => true,
         'date_sort' => SORT_DESC,
@@ -49,3 +49,6 @@ return [
 //	8 — все
 //		^ не работает для комментариев
 // см. также ModuleACL::CheckSimpleAccessLevel
+// na_required_rating — рейтинг, начиная с которого разрешено видеть список оценок (false или null для отключения ограничений)
+// hide_voters_from_owner — скрыть голосующих от владельца объекта
+// date_sort — режим сортировки голосов по дате: по возрастанию (SORT_ASC) или по убыванию (SORT_DESC)
