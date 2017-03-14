@@ -55,5 +55,6 @@ return [
 // см. также ModuleACL::CheckSimpleAccessLevel
 // na_required_rating — рейтинг, начиная с которого разрешено видеть список оценок (false или null для отключения ограничений)
 // hide_voters_from_owner — скрыть голосующих от владельца объекта
-// hide_voters_from_owner_at — давность голоса, начиная с которой его нужно скрыть
+// Параметры:
+// ---- hide_voters_from_owner_at — давность голоса, начиная с которой его нужно скрыть
 // date_sort — режим сортировки голосов по дате: по возрастанию (SORT_ASC) или по убыванию (SORT_DESC)
