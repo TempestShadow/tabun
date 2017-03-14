@@ -10,7 +10,7 @@
     {if $oUserCurrent}
         {assign var="oCommentRating" value=$oComment->getRating()}
         {assign var="oCommentVoteCount" value=$oComment->getCountVote()}
-        {assign var="bVoteInfoEnabled" value=$LS->ACL_CheckSimpleAccessLevel($oConfig->GetValue('vote_state.comment.na_enable_level'), $oUserCurrent, $oComment, 'comment')}
+        {assign var="bVoteInfoEnabled" value=$LS->ACL_CheckSimpleAccessLevel($oConfig->GetValue('vote_state.comment.na_required_level'), $oUserCurrent, $oComment, 'comment')}
     {/if}
 
     <section class="comment">

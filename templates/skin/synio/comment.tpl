@@ -12,7 +12,7 @@
 	{if $bVoteInfoEnabledForTopic !== null}
 		{assign var="bVoteInfoEnabled" value=$bVoteInfoEnabledForTopic}
 	{else}
-		{assign var="bVoteInfoEnabled" value=$LS->ACL_CheckSimpleAccessLevel($oConfig->GetValue('vote_state.comment.na_enable_level'), $oUserCurrent, $oComment, 'comment')}
+		{assign var="bVoteInfoEnabled" value=$LS->ACL_CheckSimpleAccessLevel($oConfig->GetValue('vote_state.comment.na_required_level'), $oUserCurrent, $oComment, 'comment')}
 	{/if}
     {if $oCommentAuthorId == $oUserCurrent->getId()}
         {assign var="oCommentSelf" value="comment-self"}

@@ -1225,8 +1225,8 @@ class ActionAjax extends Action {
 		switch($targetType) {
 			case 'comment':
 				$oTarget = $this->Comment_GetCommentById($targetId);
-				$newAgeEnableLevel = Config::Get('vote_state.comment.na_enable_level');
-				$oldAgeEnableLevel = Config::Get('vote_state.comment.oa_enable_level');
+				$newAgeRequiredLevel = Config::Get('vote_state.comment.na_required_level');
+				$oldAgeRequiredLevel = Config::Get('vote_state.comment.oa_required_level');
 				$newAgeRequiredRating = Config::Get('vote_state.comment.na_required_rating');
 				$ageSwitchDate = Config::Get('vote_state.comment.as_date');
 				$dateSort = Config::Get('vote_state.comment.date_sort');
@@ -1234,8 +1234,8 @@ class ActionAjax extends Action {
 				break;
 			case 'topic':
 				$oTarget = $this->Topic_GetTopicById($targetId);
-				$newAgeEnableLevel = Config::Get('vote_state.topic.na_enable_level');
-				$oldAgeEnableLevel = Config::Get('vote_state.topic.oa_enable_level');
+				$newAgeRequiredLevel = Config::Get('vote_state.topic.na_required_level');
+				$oldAgeRequiredLevel = Config::Get('vote_state.topic.oa_required_level');
 				$newAgeRequiredRating = Config::Get('vote_state.topic.na_required_rating');
 				$ageSwitchDate = Config::Get('vote_state.topic.as_date');
 				$dateSort = Config::Get('vote_state.topic.date_sort');
@@ -1243,8 +1243,8 @@ class ActionAjax extends Action {
 				break;
 			case 'blog':
 				$oTarget = $this->Blog_GetBlogById($targetId);
-				$newAgeEnableLevel = Config::Get('vote_state.blog.na_enable_level');
-				$oldAgeEnableLevel = Config::Get('vote_state.blog.oa_enable_level');
+				$newAgeRequiredLevel = Config::Get('vote_state.blog.na_required_level');
+				$oldAgeRequiredLevel = Config::Get('vote_state.blog.oa_required_level');
 				$newAgeRequiredRating = Config::Get('vote_state.blog.na_required_rating');
 				$ageSwitchDate = Config::Get('vote_state.blog.as_date');
 				$dateSort = Config::Get('vote_state.blog.date_sort');
@@ -1252,8 +1252,8 @@ class ActionAjax extends Action {
 				break;
 			case 'user':
 				$oTarget = $this->User_GetUserById($targetId);
-				$newAgeEnableLevel = Config::Get('vote_state.user.na_enable_level');
-				$oldAgeEnableLevel = Config::Get('vote_state.user.oa_enable_level');
+				$newAgeRequiredLevel = Config::Get('vote_state.user.na_required_level');
+				$oldAgeRequiredLevel = Config::Get('vote_state.user.oa_required_level');
 				$newAgeRequiredRating = Config::Get('vote_state.user.na_required_rating');
 				$ageSwitchDate = Config::Get('vote_state.user.as_date');
 				$dateSort = Config::Get('vote_state.user.date_sort');
@@ -1266,7 +1266,7 @@ class ActionAjax extends Action {
 		/**
 		 * Пользователь авторизован?
 		 */
-		if (!$this->oUserCurrent && $newAgeEnableLevel < 8) {
+		if (!$this->oUserCurrent && $newAgeRequiredLevel < 8) {
 			$this->Message_AddErrorSingle($this->Lang_Get('need_authorization'),$this->Lang_Get('error'));
 			return;
 		}
@@ -1279,7 +1279,7 @@ class ActionAjax extends Action {
 			return;
 		}
 		
-		if(!$this->ACL_CheckSimpleAccessLevel($newAgeEnableLevel, $this->oUserCurrent, $oTarget, $targetType)) {
+		if(!$this->ACL_CheckSimpleAccessLevel($newAgeRequiredLevel, $this->oUserCurrent, $oTarget, $targetType)) {
 			$this->Message_AddErrorSingle($this->Lang_Get('not_access'),$this->Lang_Get('error'));
 			return;
 		}
@@ -1305,7 +1305,7 @@ class ActionAjax extends Action {
 			} else {
 				$oUser = $this->User_GetUserById($oVote->getVoterId());
 			}
-			$bShowUser = $oUser && (strtotime($oVote->getDate()) > $ageSwitchDate || $this->ACL_CheckSimpleAccessLevel($oldAgeEnableLevel, $this->oUserCurrent, $oTarget, $targetType));
+			$bShowUser = $oUser && (strtotime($oVote->getDate()) > $ageSwitchDate || $this->ACL_CheckSimpleAccessLevel($oldAgeRequiredLevel, $this->oUserCurrent, $oTarget, $targetType));
 			$aResult[] = array(
 				'voterName' => $bShowUser ? $oUser->getLogin() : null,
 				'voterAvatar' => $bShowUser ? $oUser->getProfileAvatarPath() : null,
