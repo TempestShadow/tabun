@@ -1227,6 +1227,7 @@ class ActionAjax extends Action {
 				$oTarget = $this->Comment_GetCommentById($targetId);
 				$newAgeEnableLevel = Config::Get('vote_state.comment.na_enable_level');
 				$oldAgeEnableLevel = Config::Get('vote_state.comment.oa_enable_level');
+				$newAgeRequiredRating = Config::Get('vote_state.comment.na_required_rating');
 				$ageSwitchDate = Config::Get('vote_state.comment.as_date');
 				$dateSort = Config::Get('vote_state.comment.date_sort');
 				$hideVotersFromOwner = Config::Get('vote_state.comment.hide_voters_from_owner');
@@ -1235,6 +1236,7 @@ class ActionAjax extends Action {
 				$oTarget = $this->Topic_GetTopicById($targetId);
 				$newAgeEnableLevel = Config::Get('vote_state.topic.na_enable_level');
 				$oldAgeEnableLevel = Config::Get('vote_state.topic.oa_enable_level');
+				$newAgeRequiredRating = Config::Get('vote_state.topic.na_required_rating');
 				$ageSwitchDate = Config::Get('vote_state.topic.as_date');
 				$dateSort = Config::Get('vote_state.topic.date_sort');
 				$hideVotersFromOwner = Config::Get('vote_state.topic.hide_voters_from_owner');
@@ -1243,6 +1245,7 @@ class ActionAjax extends Action {
 				$oTarget = $this->Blog_GetBlogById($targetId);
 				$newAgeEnableLevel = Config::Get('vote_state.blog.na_enable_level');
 				$oldAgeEnableLevel = Config::Get('vote_state.blog.oa_enable_level');
+				$newAgeRequiredRating = Config::Get('vote_state.blog.na_required_rating');
 				$ageSwitchDate = Config::Get('vote_state.blog.as_date');
 				$dateSort = Config::Get('vote_state.blog.date_sort');
 				$hideVotersFromOwner = Config::Get('vote_state.blog.hide_voters_from_owner');
@@ -1251,6 +1254,7 @@ class ActionAjax extends Action {
 				$oTarget = $this->User_GetUserById($targetId);
 				$newAgeEnableLevel = Config::Get('vote_state.user.na_enable_level');
 				$oldAgeEnableLevel = Config::Get('vote_state.user.oa_enable_level');
+				$newAgeRequiredRating = Config::Get('vote_state.user.na_required_rating');
 				$ageSwitchDate = Config::Get('vote_state.user.as_date');
 				$dateSort = Config::Get('vote_state.user.date_sort');
 				$hideVotersFromOwner = Config::Get('vote_state.user.hide_voters_from_owner');
@@ -1276,6 +1280,11 @@ class ActionAjax extends Action {
 		}
 		
 		if(!$this->ACL_CheckSimpleAccessLevel($newAgeEnableLevel, $this->oUserCurrent, $oTarget, $targetType)) {
+			$this->Message_AddErrorSingle($this->Lang_Get('not_access'),$this->Lang_Get('error'));
+			return;
+		}
+		
+		if(is_numeric($newAgeRequiredRating) && $oUser->getRating() < $newAgeRequiredRating) {
 			$this->Message_AddErrorSingle($this->Lang_Get('not_access'),$this->Lang_Get('error'));
 			return;
 		}

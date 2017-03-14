@@ -5,6 +5,7 @@ return [
         'as_date' => 1489132800,    // strtotime('2017-03-10')
         'oa_enable_level' => 1,
         'na_enable_level' => 6,     // Allow all allowed users to listen New Age
+        'na_required_rating' => 10.0,
         'date_sort' => SORT_ASC,
         'hide_voters_from_owner' => true,
     ],
@@ -12,6 +13,7 @@ return [
         'as_date' => 1489132800,    // strtotime('2017-03-10')
         'oa_enable_level' => 1,
         'na_enable_level' => 6,     // Allow all allowed users to listen New Age
+        'na_required_rating' => false,
         'date_sort' => SORT_ASC,
         'hide_voters_from_owner' => false,
     ],
@@ -19,6 +21,7 @@ return [
         'as_date' => 0,
         'oa_enable_level' => 6,
         'na_enable_level' => 6,     // Allow all allowed users to listen New Age
+        'na_required_rating' => false,
         'date_sort' => SORT_DESC,
         'hide_voters_from_owner' => false,
     ],
@@ -26,6 +29,7 @@ return [
         'as_date' => 1357027200,    // strtotime('2013-01-01')
         'oa_enable_level' => 1,
         'na_enable_level' => 6,     // Allow all users to listen New Age
+        'na_required_rating' => 10.0,
         'date_sort' => SORT_DESC,
         'hide_voters_from_owner' => true,
     ],
