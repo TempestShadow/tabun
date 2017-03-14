@@ -7,6 +7,7 @@ return [
         'na_required_level' => 6,   // Allow all allowed users to listen New Age
         'na_required_rating' => 10.0,
         'hide_voters_from_owner' => true,
+        'hide_voters_from_owner_at' => 60*60*24*3,  // 3 days
         'date_sort' => SORT_ASC,
     ],
     'topic' => [
@@ -15,6 +16,7 @@ return [
         'na_required_level' => 6,   // Allow all allowed users to listen New Age
         'na_required_rating' => false,
         'hide_voters_from_owner' => false,
+        'hide_voters_from_owner_at' => 0,
         'date_sort' => SORT_ASC,
     ],
     'blog' => [
@@ -23,6 +25,7 @@ return [
         'na_required_level' => 6,   // Allow all allowed users to listen New Age
         'na_required_rating' => false,
         'hide_voters_from_owner' => false,
+        'hide_voters_from_owner_at' => 0,
         'date_sort' => SORT_DESC,
     ],
     'user' => [
@@ -31,6 +34,7 @@ return [
         'na_required_level' => 6,   // Allow all users to listen New Age
         'na_required_rating' => 10.0,
         'hide_voters_from_owner' => true,
+        'hide_voters_from_owner_at' => 60*60*24*7,  // 7 days
         'date_sort' => SORT_DESC,
     ],
 ];
@@ -51,4 +55,5 @@ return [
 // см. также ModuleACL::CheckSimpleAccessLevel
 // na_required_rating — рейтинг, начиная с которого разрешено видеть список оценок (false или null для отключения ограничений)
 // hide_voters_from_owner — скрыть голосующих от владельца объекта
+// hide_voters_from_owner_at — давность голоса, начиная с которой его нужно скрыть
 // date_sort — режим сортировки голосов по дате: по возрастанию (SORT_ASC) или по убыванию (SORT_DESC)

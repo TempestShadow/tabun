@@ -1269,7 +1269,7 @@ class ActionAjax extends Action {
 		
 		$aVotes = $this->Vote_SimpleGetVoteByOneTarget($targetId, $targetType);
 		$aResult = array();
-		$bHideAllVoters = $config['hide_voters_from_owner'] && (
+		$bHideAllVoters = $config['hide_voters_from_owner'] && !$config['hide_voters_from_owner_at'] && (
 			($targetType == 'user' && $oTarget->getId() == $this->oUserCurrent->getId())
 			||
 			($targetType == 'blog' && $oTarget->getOwnerId() == $this->oUserCurrent->getId())
@@ -1283,7 +1283,8 @@ class ActionAjax extends Action {
 			} else {
 				$oUser = $this->User_GetUserById($oVote->getVoterId());
 			}
-			$bShowUser = $oUser && (strtotime($oVote->getDate()) > $config['as_date'] || $this->ACL_CheckSimpleAccessLevel($config['oa_required_level'], $this->oUserCurrent, $oTarget, $targetType));
+			$iVoteTimestamp = strtotime($oVote->getDate());
+			$bShowUser = $oUser && (!$config['hide_voters_from_owner'] || $iVoteTimestamp+$config['hide_voters_from_owner_at'] > time()) && ($iVoteTimestamp > $config['as_date'] || $this->ACL_CheckSimpleAccessLevel($config['oa_required_level'], $this->oUserCurrent, $oTarget, $targetType));
 			$aResult[] = array(
 				'voterName' => $bShowUser ? $oUser->getLogin() : null,
 				'voterAvatar' => $bShowUser ? $oUser->getProfileAvatarPath() : null,
