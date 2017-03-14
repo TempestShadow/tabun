@@ -1229,6 +1229,7 @@ class ActionAjax extends Action {
 				$oldAgeEnableLevel = Config::Get('vote_state.comment.oa_enable_level');
 				$ageSwitchDate = Config::Get('vote_state.comment.as_date');
 				$dateSort = Config::Get('vote_state.comment.date_sort');
+				$hideVotersFromOwner = Config::Get('vote_state.comment.hide_voters_from_owner');
 				break;
 			case 'topic':
 				$oTarget = $this->Topic_GetTopicById($targetId);
@@ -1236,6 +1237,7 @@ class ActionAjax extends Action {
 				$oldAgeEnableLevel = Config::Get('vote_state.topic.oa_enable_level');
 				$ageSwitchDate = Config::Get('vote_state.topic.as_date');
 				$dateSort = Config::Get('vote_state.topic.date_sort');
+				$hideVotersFromOwner = Config::Get('vote_state.topic.hide_voters_from_owner');
 				break;
 			case 'blog':
 				$oTarget = $this->Blog_GetBlogById($targetId);
@@ -1243,6 +1245,7 @@ class ActionAjax extends Action {
 				$oldAgeEnableLevel = Config::Get('vote_state.blog.oa_enable_level');
 				$ageSwitchDate = Config::Get('vote_state.blog.as_date');
 				$dateSort = Config::Get('vote_state.blog.date_sort');
+				$hideVotersFromOwner = Config::Get('vote_state.blog.hide_voters_from_owner');
 				break;
 			case 'user':
 				$oTarget = $this->User_GetUserById($targetId);
@@ -1250,6 +1253,7 @@ class ActionAjax extends Action {
 				$oldAgeEnableLevel = Config::Get('vote_state.user.oa_enable_level');
 				$ageSwitchDate = Config::Get('vote_state.user.as_date');
 				$dateSort = Config::Get('vote_state.user.date_sort');
+				$hideVotersFromOwner = Config::Get('vote_state.user.hide_voters_from_owner');
 				break;
 			default:
 				$this->Message_AddErrorSingle($this->Lang_Get('system_error'),$this->Lang_Get('error'));
@@ -1278,8 +1282,20 @@ class ActionAjax extends Action {
 		
 		$aVotes = $this->Vote_SimpleGetVoteByOneTarget($targetId, $targetType);
 		$aResult = array();
+		$bHideAllVoters = $hideVotersFromOwner && (
+			($targetType == 'user' && $oTarget->getId() == $this->oUserCurrent->getId())
+			||
+			($targetType == 'blog' && $oTarget->getOwnerId() == $this->oUserCurrent->getId())
+			||
+			// topic, comment
+			$oTarget->getUserId() == $this->oUserCurrent->getId()
+		);
 		foreach($aVotes as $oVote) {
-			$oUser = $this->User_GetUserById($oVote->getVoterId());
+			if($bHideAllVoters) {
+				$oUser = null;
+			} else {
+				$oUser = $this->User_GetUserById($oVote->getVoterId());
+			}
 			$bShowUser = $oUser && (strtotime($oVote->getDate()) > $ageSwitchDate || $this->ACL_CheckSimpleAccessLevel($oldAgeEnableLevel, $this->oUserCurrent, $oTarget, $targetType));
 			$aResult[] = array(
 				'voterName' => $bShowUser ? $oUser->getLogin() : null,
