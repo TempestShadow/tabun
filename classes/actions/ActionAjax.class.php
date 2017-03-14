@@ -1262,7 +1262,7 @@ class ActionAjax extends Action {
 			return;
 		}
 		
-		if(is_numeric($config['na_required_rating']) && $oUser->getRating() < $config['na_required_rating']) {
+		if(is_numeric($config['na_required_rating']) && $this->oUserCurrent->getRating() < $config['na_required_rating']) {
 			$this->Message_AddErrorSingle($this->Lang_Get('not_access'),$this->Lang_Get('error'));
 			return;
 		}
